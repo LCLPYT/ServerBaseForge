@@ -15,11 +15,19 @@ public class Config {
 	private static Map<String, Object> register = new HashMap<>();
 	
 	public static final String KEY_SPAWN_PROT_ENABLED = "spawn-prot.enabled",
-			KEY_SPAWN_PROT_RANGE = "spawn-prot.range";
+			KEY_SPAWN_PROT_RANGE = "spawn-prot.range",
+			KEY_SPAWN_PROT_ICE_MELT = "spawn-prot.rules.ice-melt",
+			KEY_SPAWN_PROT_WATER_FREEZE = "spawn-prot.rules.water-freeze",
+			KEY_SPAWN_PROT_SNOW_MELT = "spawn-prot.rules.snow-melt",
+			KEY_SPAWN_PROT_SNOW_FALL = "spawn-prot.rules.snow-fall";
 	
 	static {
 		register.put(KEY_SPAWN_PROT_ENABLED, false);
 		register.put(KEY_SPAWN_PROT_RANGE, 400);
+		register.put(KEY_SPAWN_PROT_ICE_MELT, true);
+		register.put(KEY_SPAWN_PROT_WATER_FREEZE, true);
+		register.put(KEY_SPAWN_PROT_SNOW_MELT, true);
+		register.put(KEY_SPAWN_PROT_SNOW_FALL, true);
 	}
 	
 	public static void load() {
@@ -98,6 +106,38 @@ public class Config {
 	
 	public static void setSpawnProtectionRange(double range) {
 		set(KEY_SPAWN_PROT_RANGE, range);
+	}
+
+	public static boolean shouldIceMelt() {
+		return get(KEY_SPAWN_PROT_ICE_MELT);
+	}
+	
+	public static void setIceMelt(boolean melt) {
+		set(KEY_SPAWN_PROT_ICE_MELT, melt);
+	}
+	
+	public static boolean shouldWaterFreeze() {
+		return get(KEY_SPAWN_PROT_WATER_FREEZE);
+	}
+	
+	public static void setWaterFreeze(boolean freeze) {
+		set(KEY_SPAWN_PROT_WATER_FREEZE, freeze);
+	}
+	
+	public static boolean shouldSnowMelt() {
+		return get(KEY_SPAWN_PROT_SNOW_MELT);
+	}
+	
+	public static void setSnowMelt(boolean melt) {
+		set(KEY_SPAWN_PROT_SNOW_MELT, melt);
+	}
+
+	public static boolean shouldSnowFall() {
+		return get(KEY_SPAWN_PROT_SNOW_FALL);
+	}
+	
+	public static void setSnowFall(boolean fall) {
+		set(KEY_SPAWN_PROT_SNOW_FALL, fall);
 	}
 
 }
