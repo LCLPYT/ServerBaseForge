@@ -15,6 +15,7 @@ import net.minecraftforge.fml.event.server.FMLServerStoppedEvent;
 import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import work.lclpnet.core.util.ComponentSupplier;
+import work.lclpnet.serverbase.prot.ProtectionListener;
 
 @Mod(ServerBase.MODID)
 public class ServerBase {
@@ -28,11 +29,14 @@ public class ServerBase {
 
 		IEventBus bus = MinecraftForge.EVENT_BUS;
 		bus.register(this);
+		bus.register(new ProtectionListener());
 	}
 
 	private void setup(final FMLCommonSetupEvent event) { //preinit
 		LOGGER.info("ServerBase initializing...");
 
+		Config.load();
+		
 		LOGGER.info("ServerBase initialized.");
 	}
 
@@ -60,6 +64,8 @@ public class ServerBase {
 	public void onServerReloaded(ServerReloadedEvent e) {
 		LOGGER.info("ServerBase reloading...");
 
+		Config.load();
+		
 		LOGGER.info("ServerBase reloaded.");
 	}
 	
