@@ -1,0 +1,35 @@
+modLoader="javafml"
+loaderVersion="M-31.2.9"
+issueTrackerURL="http://my.issue.tracker/"
+displayURL="http://lclpnet.work/" #optional
+authors="LCLP" #optional
+
+[[mods]]
+    modId="serverbase"
+    version="${version}"
+    displayName="ServerBase"
+    updateJSONURL="http://myurl.me/" #optional
+    logoFile="logo.png" #optional
+    credits="LCLPNetwork!" #optional
+    description='''
+    Internal Server mod.
+    '''
+    
+    [[dependencies.serverbase]]
+        modId="core" #mandatory
+        mandatory=true #mandatory
+        versionRange="1.15.2-1.0.0-forge" #mandatory
+        ordering="BEFORE"
+        side="SERVER"
+    [[dependencies.serverbase]]
+        modId="forge" #mandatory
+        mandatory=true #mandatory
+        versionRange="M-31.2.9" #mandatory
+        ordering="NONE"
+        side="SERVER"
+    [[dependencies.serverbase]]
+        modId="minecraft"
+        mandatory=true
+        versionRange="[1.15.2]"
+        ordering="NONE"
+        side="BOTH"
