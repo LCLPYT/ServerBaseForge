@@ -19,7 +19,12 @@ public class Config {
 			KEY_SPAWN_PROT_ICE_MELT = "spawn-prot.rules.ice-melt",
 			KEY_SPAWN_PROT_WATER_FREEZE = "spawn-prot.rules.water-freeze",
 			KEY_SPAWN_PROT_SNOW_MELT = "spawn-prot.rules.snow-melt",
-			KEY_SPAWN_PROT_SNOW_FALL = "spawn-prot.rules.snow-fall";
+			KEY_SPAWN_PROT_SNOW_FALL = "spawn-prot.rules.snow-fall",
+			KEY_SPAWN_PROT_ALLOW_ARMOR_STAND_INTERACTION = "spawn-prot.rules.allow-armor-stand-interact",
+			KEY_SPAWN_PROT_ALLOW_EXPLOSIONS = "spawn-prot.rules.allow-explosions",
+			KEY_SPAWN_PROT_ALLOW_MOB_GRIEFING = "spawn-prot.rules.allow-mob-griefing",
+			KEY_SPAWN_PROT_ALLOW_ITEM_FRAME_INTERACTION = "spawn-prot.rules.allow-item-frame-interaction",
+			KEY_SPAWN_PROT_ALLOW_MOB_SPAWN = "spawn-prot.rules.allow-mob-spawning";
 	
 	static {
 		register.put(KEY_SPAWN_PROT_ENABLED, false);
@@ -28,6 +33,11 @@ public class Config {
 		register.put(KEY_SPAWN_PROT_WATER_FREEZE, true);
 		register.put(KEY_SPAWN_PROT_SNOW_MELT, true);
 		register.put(KEY_SPAWN_PROT_SNOW_FALL, true);
+		register.put(KEY_SPAWN_PROT_ALLOW_ARMOR_STAND_INTERACTION, true);
+		register.put(KEY_SPAWN_PROT_ALLOW_EXPLOSIONS, true);
+		register.put(KEY_SPAWN_PROT_ALLOW_MOB_GRIEFING, true);
+		register.put(KEY_SPAWN_PROT_ALLOW_ITEM_FRAME_INTERACTION, true);
+		register.put(KEY_SPAWN_PROT_ALLOW_MOB_SPAWN, true);
 	}
 	
 	public static void load() {
@@ -138,6 +148,46 @@ public class Config {
 	
 	public static void setSnowFall(boolean fall) {
 		set(KEY_SPAWN_PROT_SNOW_FALL, fall);
+	}
+
+	public static boolean allowArmorStandInteraction() {
+		return get(KEY_SPAWN_PROT_ALLOW_ARMOR_STAND_INTERACTION);
+	}
+	
+	public static void setArmorStandInteraction(boolean allow) {
+		set(KEY_SPAWN_PROT_ALLOW_ARMOR_STAND_INTERACTION, allow);
+	}
+
+	public static boolean allowExplosions() {
+		return get(KEY_SPAWN_PROT_ALLOW_EXPLOSIONS);
+	}
+	
+	public static void setExplosions(boolean allow) {
+		set(KEY_SPAWN_PROT_ALLOW_EXPLOSIONS, allow);
+	}
+
+	public static boolean allowMobGriefing() {
+		return get(KEY_SPAWN_PROT_ALLOW_MOB_GRIEFING);
+	}
+	
+	public static void setMobGriefing(boolean allow) {
+		set(KEY_SPAWN_PROT_ALLOW_MOB_GRIEFING, allow);
+	}
+
+	public static boolean allowItemFrameInteraction() {
+		return get(KEY_SPAWN_PROT_ALLOW_ITEM_FRAME_INTERACTION);
+	}
+	
+	public static void setItemFrameInteraction(boolean allow) {
+		set(KEY_SPAWN_PROT_ALLOW_ITEM_FRAME_INTERACTION, allow);
+	}
+
+	public static boolean allowSpawnMonsters() {
+		return get(KEY_SPAWN_PROT_ALLOW_MOB_SPAWN);
+	}
+	
+	public static void setSpawnMonsters(boolean allow) {
+		set(KEY_SPAWN_PROT_ALLOW_MOB_SPAWN, allow);
 	}
 
 }
