@@ -2,7 +2,9 @@ package work.lclpnet.serverbase;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.ws.Holder;
@@ -16,6 +18,7 @@ public class Config {
 	
 	public static final String KEY_SPAWN_PROT_ENABLED = "spawn-prot.enabled",
 			KEY_SPAWN_PROT_RANGE = "spawn-prot.range",
+			KEY_SPAWN_PROT_DIMENSIONS = "spawn-prot.dimensions",
 			KEY_SPAWN_PROT_ICE_MELT = "spawn-prot.rules.ice-melt",
 			KEY_SPAWN_PROT_WATER_FREEZE = "spawn-prot.rules.water-freeze",
 			KEY_SPAWN_PROT_SNOW_MELT = "spawn-prot.rules.snow-melt",
@@ -24,11 +27,15 @@ public class Config {
 			KEY_SPAWN_PROT_ALLOW_EXPLOSIONS = "spawn-prot.rules.allow-explosions",
 			KEY_SPAWN_PROT_ALLOW_MOB_GRIEFING = "spawn-prot.rules.allow-mob-griefing",
 			KEY_SPAWN_PROT_ALLOW_ITEM_FRAME_INTERACTION = "spawn-prot.rules.allow-item-frame-interaction",
-			KEY_SPAWN_PROT_ALLOW_MOB_SPAWN = "spawn-prot.rules.allow-mob-spawning";
+			KEY_SPAWN_PROT_ALLOW_MOB_SPAWN = "spawn-prot.rules.allow-mob-spawning",
+			KEY_SPAWN_PROT_ALLOW_BLOCK_BREAK = "spawn-prot.rules.allow-block-break",
+			KEY_SPAWN_PROT_ALLOW_BLOCK_PLACE = "spawn-prot.rules.allow-block-place",
+			KEY_SPAWN_PROT_ALLOW_BUCKET_INTERACTION = "spawn-prot.rules.allow-bucket-interaction";
 	
 	static {
 		register.put(KEY_SPAWN_PROT_ENABLED, false);
 		register.put(KEY_SPAWN_PROT_RANGE, 400);
+		register.put(KEY_SPAWN_PROT_DIMENSIONS, new ArrayList<>());
 		register.put(KEY_SPAWN_PROT_ICE_MELT, true);
 		register.put(KEY_SPAWN_PROT_WATER_FREEZE, true);
 		register.put(KEY_SPAWN_PROT_SNOW_MELT, true);
@@ -38,6 +45,9 @@ public class Config {
 		register.put(KEY_SPAWN_PROT_ALLOW_MOB_GRIEFING, true);
 		register.put(KEY_SPAWN_PROT_ALLOW_ITEM_FRAME_INTERACTION, true);
 		register.put(KEY_SPAWN_PROT_ALLOW_MOB_SPAWN, true);
+		register.put(KEY_SPAWN_PROT_ALLOW_BLOCK_BREAK, true);
+		register.put(KEY_SPAWN_PROT_ALLOW_BLOCK_PLACE, true);
+		register.put(KEY_SPAWN_PROT_ALLOW_BUCKET_INTERACTION, true);
 	}
 	
 	public static void load() {
@@ -188,6 +198,38 @@ public class Config {
 	
 	public static void setSpawnMonsters(boolean allow) {
 		set(KEY_SPAWN_PROT_ALLOW_MOB_SPAWN, allow);
+	}
+
+	public static boolean allowBreakBlocks() {
+		return get(KEY_SPAWN_PROT_ALLOW_BLOCK_BREAK);
+	}
+	
+	public static void setBreakBlocks(boolean allow) {
+		set(KEY_SPAWN_PROT_ALLOW_BLOCK_BREAK, allow);
+	}
+	
+	public static boolean allowPlaceBlocks() {
+		return get(KEY_SPAWN_PROT_ALLOW_BLOCK_PLACE);
+	}
+	
+	public static void setPlaceBlocks(boolean allow) {
+		set(KEY_SPAWN_PROT_ALLOW_BLOCK_PLACE, allow);
+	}
+
+	public static boolean allowBucketInteraction() {
+		return get(KEY_SPAWN_PROT_ALLOW_BUCKET_INTERACTION);
+	}
+	
+	public static void setBucketInteraction(boolean allow) {
+		set(KEY_SPAWN_PROT_ALLOW_BUCKET_INTERACTION, allow);
+	}
+	
+	public static List<String> getSpawnProtectedDimensions() {
+		return get(KEY_SPAWN_PROT_DIMENSIONS);
+	}
+	
+	public static void setSpawnProtectedDimensions(List<String> dimensions) {
+		set(KEY_SPAWN_PROT_DIMENSIONS, dimensions);
 	}
 
 }

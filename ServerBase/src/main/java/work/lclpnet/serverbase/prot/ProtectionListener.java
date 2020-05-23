@@ -1,6 +1,7 @@
 package work.lclpnet.serverbase.prot;
 
 import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.block.FrostedIceBlock;
 import net.minecraft.block.IceBlock;
 import net.minecraft.block.SnowBlock;
 import net.minecraft.entity.Entity;
@@ -17,17 +18,22 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.bukkitlike.BlockStateToStateEvent;
 import net.minecraftforge.event.bukkitlike.FoodLevelChangeEvent;
 import net.minecraftforge.event.bukkitlike.PlayerArmorStandManipulateEvent;
+import net.minecraftforge.event.bukkitlike.PlayerBucketEmptyEvent;
+import net.minecraftforge.event.bukkitlike.PlayerBucketFillEvent;
+import net.minecraftforge.event.custom.FrostWalkerEvent;
 import net.minecraftforge.event.custom.SnowFallEvent;
 import net.minecraftforge.event.entity.EntityMobGriefingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent.CheckSpawn;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import work.lclpnet.core.util.Location;
+import work.lclpnet.core.util.MessageType;
 import work.lclpnet.serverbase.Config;
 import work.lclpnet.serverbase.ServerBase;
 
@@ -35,7 +41,7 @@ import work.lclpnet.serverbase.ServerBase;
 public class ProtectionListener {
 
 	@SubscribeEvent
-	public static void onDamagePlayer(LivingHurtEvent e) {
+	public static void onDamage(LivingHurtEvent e) {
 		if(!Config.isSpawnProtEnabled() || !isInSpawnRange(e.getEntity())) return;
 
 		if(e.getEntity() instanceof PlayerEntity) {
@@ -61,22 +67,17 @@ public class ProtectionListener {
 		if(!Config.isSpawnProtEnabled() 
 				|| !(e.getWorld() instanceof World)) return;
 
-		if(!(!Config.shouldIceMelt() && e.getState().getBlock() instanceof IceBlock) //ice melting
-				&& !(!Config.shouldWaterFreeze() && e.getState().getBlock() instanceof FlowingFluidBlock) //water freezing
-				&& !(!Config.shouldSnowMelt() && e.getState().getBlock() instanceof SnowBlock)) return; 
-
-		BlockPos pos = e.getPos();
-		if(isInSpawnRange(new Location((World) e.getWorld(), pos.getX(), pos.getY(), pos.getZ())))
+		if(((!Config.shouldIceMelt() && e.getState().getBlock() instanceof IceBlock && !(e.getState().getBlock() instanceof FrostedIceBlock)) //ice melting
+				|| (!Config.shouldWaterFreeze() && e.getState().getBlock() instanceof FlowingFluidBlock) //water freezing
+				|| (!Config.shouldSnowMelt() && e.getState().getBlock() instanceof SnowBlock)
+				) && isInSpawnRange((World) e.getWorld(), e.getPos()))
 			e.setCanceled(true);
 	}
 
 	@SubscribeEvent
 	public static void onSnow(SnowFallEvent e) {
-		if(!Config.isSpawnProtEnabled() || Config.shouldSnowFall()) return;
-
-		BlockPos pos = e.getPos();
-		if(isInSpawnRange(new Location((World) e.getWorld(), pos.getX(), pos.getY(), pos.getZ())))
-			e.setCanceled(true);
+		if(Config.isSpawnProtEnabled() && !Config.shouldSnowFall()
+				&& isInSpawnRange((World) e.getWorld(), e.getPos())) e.setCanceled(true);
 	}
 
 	@SubscribeEvent
@@ -113,6 +114,48 @@ public class ProtectionListener {
 		boolean bool = en instanceof SlimeEntity || en instanceof BatEntity || en instanceof ChickenEntity || en instanceof MonsterEntity;
 		if(bool && isInSpawnRange(en)) e.setResult(Result.DENY);
 	}
+	
+	@SubscribeEvent
+	public static void onBlockBreak(BlockEvent.BreakEvent e) {
+		if(!Config.isSpawnProtEnabled() || Config.allowBreakBlocks() || canBypass(e.getPlayer())
+				|| !isInSpawnRange((World) e.getWorld(), e.getPos())) return;
+		
+		e.setCanceled(true);
+		e.getPlayer().sendMessage(ServerBase.TEXT.message("You can't break blocks in the spawn area.", MessageType.ERROR));
+	}
+	
+	@SubscribeEvent
+	public static void onBlockPlace(BlockEvent.EntityPlaceEvent e) {
+		if(!Config.isSpawnProtEnabled() || Config.allowPlaceBlocks() 
+				|| (e.getEntity() instanceof PlayerEntity && canBypass((PlayerEntity) e.getEntity()))
+				|| !isInSpawnRange((World) e.getWorld(), e.getPos())) return;
+		
+		e.setCanceled(true);
+		if(e.getEntity() instanceof PlayerEntity) ((PlayerEntity) e.getEntity()).sendMessage(ServerBase.TEXT.message("You can't place blocks in the spawn area.", MessageType.ERROR));
+	}
+	
+	@SubscribeEvent
+	public static void onEntityBlockForm(FrostWalkerEvent e) {
+		if(!Config.isSpawnProtEnabled()
+				|| (e.getEntity() instanceof PlayerEntity && canBypass((PlayerEntity) e.getEntity()))
+				|| !isInSpawnRange(e.getEntity())) return;
+		
+		e.setCanceled(true);
+	}
+	
+	@SubscribeEvent
+	public static void onBucketEmpty(PlayerBucketFillEvent e) {
+		if(Config.isSpawnProtEnabled() && !Config.allowBucketInteraction() 
+				&& !canBypass(e.getPlayer()) && isInSpawnRange((World) e.getWorld(), e.getBlock()))
+			e.setCanceled(true);
+	}
+	
+	@SubscribeEvent
+	public static void onBucketFill(PlayerBucketEmptyEvent e) {
+		if(Config.isSpawnProtEnabled() && !Config.allowBucketInteraction() 
+				&& !canBypass(e.getPlayer()) && isInSpawnRange((World) e.getWorld(), e.getBlock()))
+			e.setCanceled(true);
+	}
 
 	public static boolean canBypass(PlayerEntity player) {
 		return player.hasPermissionLevel(2) && player.abilities.isCreativeMode;
@@ -125,11 +168,16 @@ public class ProtectionListener {
 	public static boolean isInSpawnRange(World w, Vec3d pos) {
 		return isInSpawnRange(new Location(w, pos));
 	}
-
-	public static boolean isInSpawnRange(Location loc) {
-		return loc.squareDistanceTo(getOrigin(loc.world)) <= Config.getSpawnProtectionRange() * Config.getSpawnProtectionRange();
+	
+	public static boolean isInSpawnRange(World w, BlockPos pos) {
+		return isInSpawnRange(new Location(w, pos.getX(), pos.getY(), pos.getZ()));
 	}
 
+	public static boolean isInSpawnRange(Location loc) {
+		return Config.getSpawnProtectedDimensions().contains(loc.getWorld().getDimension().getType().getRegistryName().toString()) 
+				&& loc.squareDistanceTo(getOrigin(loc.world)) <= Config.getSpawnProtectionRange() * Config.getSpawnProtectionRange();
+	}
+	
 	private static Location getOrigin(World w) {
 		BlockPos spawnPoint = w.getSpawnPoint();
 		return new Location(w, (double) spawnPoint.getX(), (double) spawnPoint.getY(), (double) spawnPoint.getZ());
