@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ArmorStandEntity;
 import net.minecraft.entity.item.ItemFrameEntity;
 import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.monster.PhantomEntity;
 import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.entity.passive.BatEntity;
 import net.minecraft.entity.passive.ChickenEntity;
@@ -111,7 +112,8 @@ public class ProtectionListener {
 		if(!Config.isSpawnProtEnabled() || Config.allowSpawnMonsters()) return;
 		
 		Entity en = e.getEntity();
-		boolean bool = en instanceof SlimeEntity || en instanceof BatEntity || en instanceof ChickenEntity || en instanceof MonsterEntity;
+		boolean bool = en instanceof SlimeEntity || en instanceof BatEntity 
+				|| en instanceof ChickenEntity || en instanceof MonsterEntity || en instanceof PhantomEntity;
 		if(bool && isInSpawnRange(en)) e.setResult(Result.DENY);
 	}
 	

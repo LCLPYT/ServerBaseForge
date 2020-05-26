@@ -3,10 +3,10 @@ buildscript {
         maven { url = 'https://files.minecraftforge.net/maven' }
         jcenter()
         mavenCentral()
-        maven { url = 'http://localhost:8000' }
+        maven { url = 'http://localhost:8100/repository/base/' }
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: 'M.3.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: 'M.3.0.170', changing: true
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
@@ -148,7 +148,15 @@ publishing {
     }
     repositories {
         maven {
-            url "file:///${project.projectDir}/mcmodsrepo"
+            if (project.hasProperty('forgeMavenPassword') && project.hasProperty('forgeMavenHost')) {
+                credentials {
+                    username project.properties.forgeMavenUser
+                    password project.properties.forgeMavenPassword
+                }
+                url project.properties.forgeMavenHost
+            } else {
+                url "file:///${project.projectDir}/mcmodsrepo"
+            }
         }
     }
 }
