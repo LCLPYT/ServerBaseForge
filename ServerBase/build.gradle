@@ -14,7 +14,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.15.2-1.0.1-forge'
+version = '1.15.2-1.0.2-forge'
 group = 'work.lclpnet.serverbase' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'serverbase'
 
