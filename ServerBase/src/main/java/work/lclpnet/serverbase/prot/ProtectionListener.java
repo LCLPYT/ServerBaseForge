@@ -33,8 +33,8 @@ import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import work.lclpnet.core.util.Location;
-import work.lclpnet.core.util.MessageType;
+import work.lclpnet.corebase.util.Location;
+import work.lclpnet.corebase.util.MessageType;
 import work.lclpnet.serverbase.Config;
 import work.lclpnet.serverbase.ServerBase;
 

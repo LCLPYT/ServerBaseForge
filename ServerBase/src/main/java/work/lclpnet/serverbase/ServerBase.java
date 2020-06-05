@@ -14,7 +14,7 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.event.server.FMLServerStoppedEvent;
 import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import work.lclpnet.core.util.ComponentSupplier;
+import work.lclpnet.corebase.util.ComponentSupplier;
 import work.lclpnet.serverbase.prot.ProtectionListener;
 
 @Mod(ServerBase.MODID)
