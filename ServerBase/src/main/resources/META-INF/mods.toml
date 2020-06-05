@@ -16,9 +16,15 @@ authors="LCLP" #optional
     '''
     
     [[dependencies.serverbase]]
+        modId="corebase" #mandatory
+        mandatory=true #mandatory
+        versionRange="1.15.2-1.1.0-forge" #mandatory
+        ordering="BEFORE"
+        side="SERVER"
+    [[dependencies.serverbase]]
         modId="core" #mandatory
         mandatory=true #mandatory
-        versionRange="1.15.2-1.0.0-forge" #mandatory
+        versionRange="1.15.2-1.0.1-forge" #mandatory
         ordering="BEFORE"
         side="SERVER"
     [[dependencies.serverbase]]
