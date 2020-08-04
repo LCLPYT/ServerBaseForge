@@ -1,0 +1,10 @@
+{
+    "homepage": "https://github.com/LCLPYT/ServerBaseForge/releases",
+    "promos": {
+        "1.15.2-latest": "1.1.0",
+        "1.15.2-recommended": "1.1.0"
+    },
+    "1.15.2": {
+        "1.1.0": "First Version.\nCore and it's dependencies are required."
+    }
+}
