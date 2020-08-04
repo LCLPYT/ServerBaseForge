@@ -16,13 +16,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraftforge.event.bukkitlike.BlockStateToStateEvent;
-import net.minecraftforge.event.bukkitlike.FoodLevelChangeEvent;
-import net.minecraftforge.event.bukkitlike.PlayerArmorStandManipulateEvent;
-import net.minecraftforge.event.bukkitlike.PlayerBucketEmptyEvent;
-import net.minecraftforge.event.bukkitlike.PlayerBucketFillEvent;
-import net.minecraftforge.event.custom.FrostWalkerEvent;
-import net.minecraftforge.event.custom.SnowFallEvent;
 import net.minecraftforge.event.entity.EntityMobGriefingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent.CheckSpawn;
@@ -33,11 +26,19 @@ import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import work.lclpnet.corebase.event.custom.BlockStateToStateEvent;
+import work.lclpnet.corebase.event.custom.FoodLevelChangeEvent;
+import work.lclpnet.corebase.event.custom.FrostWalkerEvent;
+import work.lclpnet.corebase.event.custom.PlayerArmorStandManipulateEvent;
+import work.lclpnet.corebase.event.custom.PlayerBucketEmptyEvent;
+import work.lclpnet.corebase.event.custom.PlayerBucketFillEvent;
+import work.lclpnet.corebase.event.custom.SnowFallEvent;
 import work.lclpnet.corebase.util.Location;
 import work.lclpnet.corebase.util.MessageType;
 import work.lclpnet.serverbase.Config;
 import work.lclpnet.serverbase.ServerBase;
 
+@SuppressWarnings("deprecation")
 @EventBusSubscriber(modid = ServerBase.MODID, bus = Bus.FORGE)
 public class ProtectionListener {
 
@@ -57,7 +58,7 @@ public class ProtectionListener {
 	}
 
 	@SubscribeEvent
-	public static void onHunger(FoodLevelChangeEvent e) {
+	public static void onHunger(FoodLevelChangeEvent e) { //TODO FoodLevelChangeEvent is still not implemented.
 		if(Config.isSpawnProtEnabled() 
 				&& isInSpawnRange(e.getEntity())
 				&& e.getFromLevel() > e.getToLevel()) e.setCanceled(true);
