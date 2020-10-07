@@ -13,9 +13,13 @@ import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.entity.passive.BatEntity;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.ISpawnWorldInfo;
+import net.minecraft.world.storage.IWorldInfo;
 import net.minecraftforge.event.entity.EntityMobGriefingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent.CheckSpawn;
@@ -48,7 +52,7 @@ public class ProtectionListener {
 
 		if(e.getEntity() instanceof PlayerEntity) {
 			PlayerEntity p = (PlayerEntity) e.getEntity();
-			if(p.getFireTimer() > 0) p.setFireTimer(0);
+			if(p.getFireTimer() > 0) p.setFire(0);
 			e.setCanceled(true);
 			return;
 		}
@@ -124,7 +128,7 @@ public class ProtectionListener {
 				|| !isInSpawnRange((World) e.getWorld(), e.getPos())) return;
 		
 		e.setCanceled(true);
-		e.getPlayer().sendMessage(ServerBase.TEXT.message("You can't break blocks in the spawn area.", MessageType.ERROR));
+		e.getPlayer().sendMessage(ServerBase.TEXT.message("You can't break blocks in the spawn area.", MessageType.ERROR), Util.field_240973_b_);
 	}
 	
 	@SubscribeEvent
@@ -134,7 +138,7 @@ public class ProtectionListener {
 				|| !isInSpawnRange((World) e.getWorld(), e.getPos())) return;
 		
 		e.setCanceled(true);
-		if(e.getEntity() instanceof PlayerEntity) ((PlayerEntity) e.getEntity()).sendMessage(ServerBase.TEXT.message("You can't place blocks in the spawn area.", MessageType.ERROR));
+		if(e.getEntity() instanceof PlayerEntity) ((PlayerEntity) e.getEntity()).sendMessage(ServerBase.TEXT.message("You can't place blocks in the spawn area.", MessageType.ERROR), Util.field_240973_b_);
 	}
 	
 	@SubscribeEvent
@@ -168,7 +172,7 @@ public class ProtectionListener {
 		return isInSpawnRange(new Location(en.world, en.getPosX(), en.getPosY(), en.getPosZ()));
 	}
 
-	public static boolean isInSpawnRange(World w, Vec3d pos) {
+	public static boolean isInSpawnRange(World w, Vector3d pos) {
 		return isInSpawnRange(new Location(w, pos));
 	}
 	
@@ -177,12 +181,18 @@ public class ProtectionListener {
 	}
 
 	public static boolean isInSpawnRange(Location loc) {
-		return Config.getSpawnProtectedDimensions().contains(loc.getWorld().getDimension().getType().getRegistryName().toString()) 
+		ResourceLocation registryName = loc.getWorld().func_234923_W_().func_240901_a_();
+		return Config.getSpawnProtectedDimensions().contains(registryName.toString()) 
 				&& loc.squareDistanceTo(getOrigin(loc.world)) <= Config.getSpawnProtectionRange() * Config.getSpawnProtectionRange();
 	}
 	
 	private static Location getOrigin(World w) {
-		BlockPos spawnPoint = w.getSpawnPoint();
+		IWorldInfo wi = w.getWorldInfo();
+		if(!(wi instanceof ISpawnWorldInfo)) return null;
+		
+		ISpawnWorldInfo spawnInfo = (ISpawnWorldInfo) wi;
+		BlockPos spawnPoint = new BlockPos(spawnInfo.getSpawnX(), spawnInfo.getSpawnY(), spawnInfo.getSpawnZ());
+		
 		return new Location(w, (double) spawnPoint.getX(), (double) spawnPoint.getY(), (double) spawnPoint.getZ());
 	}
 
