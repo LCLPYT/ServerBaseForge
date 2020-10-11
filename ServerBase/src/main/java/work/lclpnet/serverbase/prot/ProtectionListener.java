@@ -128,7 +128,7 @@ public class ProtectionListener {
 				|| !isInSpawnRange((World) e.getWorld(), e.getPos())) return;
 		
 		e.setCanceled(true);
-		e.getPlayer().sendMessage(ServerBase.TEXT.message("You can't break blocks in the spawn area.", MessageType.ERROR), Util.field_240973_b_);
+		e.getPlayer().sendMessage(ServerBase.TEXT.message("You can't break blocks in the spawn area.", MessageType.ERROR), Util.DUMMY_UUID);
 	}
 	
 	@SubscribeEvent
@@ -138,7 +138,7 @@ public class ProtectionListener {
 				|| !isInSpawnRange((World) e.getWorld(), e.getPos())) return;
 		
 		e.setCanceled(true);
-		if(e.getEntity() instanceof PlayerEntity) ((PlayerEntity) e.getEntity()).sendMessage(ServerBase.TEXT.message("You can't place blocks in the spawn area.", MessageType.ERROR), Util.field_240973_b_);
+		if(e.getEntity() instanceof PlayerEntity) ((PlayerEntity) e.getEntity()).sendMessage(ServerBase.TEXT.message("You can't place blocks in the spawn area.", MessageType.ERROR), Util.DUMMY_UUID);
 	}
 	
 	@SubscribeEvent
@@ -181,7 +181,7 @@ public class ProtectionListener {
 	}
 
 	public static boolean isInSpawnRange(Location loc) {
-		ResourceLocation registryName = loc.getWorld().func_234923_W_().func_240901_a_();
+		ResourceLocation registryName = loc.getWorld().getDimensionKey().getLocation();
 		return Config.getSpawnProtectedDimensions().contains(registryName.toString()) 
 				&& loc.squareDistanceTo(getOrigin(loc.world)) <= Config.getSpawnProtectionRange() * Config.getSpawnProtectionRange();
 	}
