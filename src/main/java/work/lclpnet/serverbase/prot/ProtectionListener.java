@@ -42,7 +42,6 @@ import work.lclpnet.corebase.util.MessageType;
 import work.lclpnet.serverbase.Config;
 import work.lclpnet.serverbase.ServerBase;
 
-@SuppressWarnings("deprecation")
 @EventBusSubscriber(modid = ServerBase.MODID, bus = Bus.FORGE)
 public class ProtectionListener {
 
@@ -62,12 +61,12 @@ public class ProtectionListener {
 	}
 
 	@SubscribeEvent
-	public static void onHunger(FoodLevelChangeEvent e) { //TODO FoodLevelChangeEvent is still not implemented.
+	public static void onHunger(FoodLevelChangeEvent e) {
 		if(Config.isSpawnProtEnabled() 
 				&& isInSpawnRange(e.getEntity())
 				&& e.getFromLevel() > e.getToLevel()) e.setCanceled(true);
 	}
-
+	
 	@SubscribeEvent
 	public static void onFade(BlockStateToStateEvent e) {
 		if(!Config.isSpawnProtEnabled() 
