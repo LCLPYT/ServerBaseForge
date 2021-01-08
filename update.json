@@ -3,14 +3,15 @@
     "promos": {
         "1.15.2-latest": "1.1.0",
         "1.15.2-recommended": "1.1.0",
-        "1.16.3-latest": "1.2.1",
-        "1.16.3-recommended": "1.2.1"
+        "1.16.3-latest": "1.3.3",
+        "1.16.3-recommended": "1.3.3"
     },
     "1.15.2": {
         "1.1.0": "First Version.\nCore and it's dependencies are required."
     },
     "1.16.3": {
         "1.2.0": "1.16 beta release.",
-        "1.2.1": "Mapping update"
+        "1.2.1": "Mapping update",
+        "1.3.3": "Restructure"
     }
 }

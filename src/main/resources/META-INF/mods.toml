@@ -9,7 +9,7 @@ license="MIT"
     modId="serverbase"
     version="${version}"
     displayName="ServerBase"
-    updateJSONURL="https://raw.githubusercontent.com/LCLPYT/ServerBaseForge/master/ServerBase/update.json"
+    updateJSONURL="https://raw.githubusercontent.com/LCLPYT/ServerBaseForge/master/update.json"
     logoFile="logo.png"
     credits="LCLPNetwork!"
     description='''
@@ -19,13 +19,13 @@ license="MIT"
     [[dependencies.serverbase]]
         modId="corebase"
         mandatory=true
-        versionRange="[1.4,)"
+        versionRange="[1.5,)"
         ordering="BEFORE"
         side="SERVER"
     [[dependencies.serverbase]]
         modId="core"
         mandatory=true
-        versionRange="[1.3,)"
+        versionRange="[1.4,)"
         ordering="BEFORE"
         side="SERVER"
     [[dependencies.serverbase]]
