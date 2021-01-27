@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[34,)"
+loaderVersion="[35,)"
 issueTrackerURL="https://github.com/LCLPYT/ServerBaseForge/issues"
 displayURL="https://github.com/LCLPYT/ServerBaseForge"
 authors="LCLP"
@@ -19,24 +19,24 @@ license="MIT"
     [[dependencies.serverbase]]
         modId="corebase"
         mandatory=true
-        versionRange="[1.5,)"
+        versionRange="[1.6,)"
         ordering="BEFORE"
         side="SERVER"
     [[dependencies.serverbase]]
         modId="core"
         mandatory=true
-        versionRange="[1.4,)"
+        versionRange="[1.5,)"
         ordering="BEFORE"
         side="SERVER"
     [[dependencies.serverbase]]
         modId="forge"
         mandatory=true
-        versionRange="[34,)"
+        versionRange="[35,)"
         ordering="NONE"
         side="SERVER"
     [[dependencies.serverbase]]
         modId="minecraft"
         mandatory=true
-        versionRange="[1.16.3]"
+        versionRange="[1.16.4]"
         ordering="NONE"
         side="BOTH"
