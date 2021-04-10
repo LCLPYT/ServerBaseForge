@@ -1,42 +1,42 @@
-modLoader="javafml"
-loaderVersion="[35,)"
-issueTrackerURL="https://github.com/LCLPYT/ServerBaseForge/issues"
-displayURL="https://github.com/LCLPYT/ServerBaseForge"
-authors="LCLP"
-license="MIT"
+modLoader = "javafml"
+loaderVersion = "[35,)"
+issueTrackerURL = "https://github.com/LCLPYT/ServerBaseForge/issues"
+displayURL = "https://github.com/LCLPYT/ServerBaseForge"
+authors = "LCLP"
+license = "MIT"
 
 [[mods]]
-    modId="serverbase"
-    version="${version}"
-    displayName="ServerBase"
-    updateJSONURL="https://raw.githubusercontent.com/LCLPYT/ServerBaseForge/master/update.json"
-    logoFile="logo.png"
-    credits="LCLPNetwork!"
-    description='''
+modId = "serverbase"
+version = "${version}"
+displayName = "ServerBase"
+updateJSONURL = "https://raw.githubusercontent.com/LCLPYT/ServerBaseForge/master/update.json"
+logoFile = "logo.png"
+credits = "LCLPNetwork!"
+description = '''
     Internal Server mod.
     '''
-    
-    [[dependencies.serverbase]]
-        modId="corebase"
-        mandatory=true
-        versionRange="[1.6,)"
-        ordering="BEFORE"
-        side="SERVER"
-    [[dependencies.serverbase]]
-        modId="core"
-        mandatory=true
-        versionRange="[1.5,)"
-        ordering="BEFORE"
-        side="SERVER"
-    [[dependencies.serverbase]]
-        modId="forge"
-        mandatory=true
-        versionRange="[35,)"
-        ordering="NONE"
-        side="SERVER"
-    [[dependencies.serverbase]]
-        modId="minecraft"
-        mandatory=true
-        versionRange="[1.16.4]"
-        ordering="NONE"
-        side="BOTH"
+
+[[dependencies.serverbase]]
+modId = "corebase"
+mandatory = true
+versionRange = "[1.6,)"
+ordering = "BEFORE"
+side = "SERVER"
+[[dependencies.serverbase]]
+modId = "core"
+mandatory = true
+versionRange = "[1.5,)"
+ordering = "BEFORE"
+side = "SERVER"
+[[dependencies.serverbase]]
+modId = "forge"
+mandatory = true
+versionRange = "[35,)"
+ordering = "NONE"
+side = "SERVER"
+[[dependencies.serverbase]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.16.4]"
+ordering = "NONE"
+side = "BOTH"

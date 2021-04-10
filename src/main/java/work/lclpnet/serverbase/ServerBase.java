@@ -1,8 +1,5 @@
 package work.lclpnet.serverbase;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -13,60 +10,61 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.event.server.FMLServerStoppedEvent;
 import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import work.lclpnet.corebase.event.custom.ServerReloadedEvent;
 import work.lclpnet.corebase.util.ComponentSupplier;
 import work.lclpnet.serverbase.prot.ProtectionListener;
 
 @Mod(ServerBase.MODID)
 public class ServerBase {
-	
-	public static final String MODID = "serverbase";
-	private static final Logger LOGGER = LogManager.getLogger();
-	public static final ComponentSupplier TEXT = new ComponentSupplier("ServerBase");
 
-	public ServerBase() {
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+    public static final String MODID = "serverbase";
+    private static final Logger LOGGER = LogManager.getLogger();
+    public static final ComponentSupplier TEXT = new ComponentSupplier("ServerBase");
 
-		IEventBus bus = MinecraftForge.EVENT_BUS;
-		bus.register(this);
-		bus.register(new ProtectionListener());
-	}
+    public ServerBase() {
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 
-	private void setup(final FMLCommonSetupEvent event) { //preinit
-		LOGGER.info("ServerBase initializing...");
+        IEventBus bus = MinecraftForge.EVENT_BUS;
+        bus.register(this);
+    }
 
-		Config.load();
-		
-		LOGGER.info("ServerBase initialized.");
-	}
+    private void setup(final FMLCommonSetupEvent event) { //preinit
+        LOGGER.info("ServerBase initializing...");
 
-	@SubscribeEvent
-	public void onServerStarting(FMLServerStartingEvent e) {
-		LOGGER.info("ServerBase starting...");
-	}
+        Config.load();
 
-	@SubscribeEvent
-	public void onServerStarted(FMLServerStartedEvent e) {
-		LOGGER.info("ServerBase started.");
-	}
-	
-	@SubscribeEvent
-	public void onServerStop(FMLServerStoppingEvent e) {
-		LOGGER.info("ServerBase stopping...");
-	}
-	
-	@SubscribeEvent
-	public void onServerStopped(FMLServerStoppedEvent e) {
-		LOGGER.info("ServerBase stopped.");
-	}
+        LOGGER.info("ServerBase initialized.");
+    }
 
-	@SubscribeEvent
-	public void onServerReloaded(ServerReloadedEvent e) {
-		LOGGER.info("ServerBase reloading...");
+    @SubscribeEvent
+    public void onServerStarting(FMLServerStartingEvent e) {
+        LOGGER.info("ServerBase starting...");
+    }
 
-		Config.load();
-		
-		LOGGER.info("ServerBase reloaded.");
-	}
-	
+    @SubscribeEvent
+    public void onServerStarted(FMLServerStartedEvent e) {
+        LOGGER.info("ServerBase started.");
+    }
+
+    @SubscribeEvent
+    public void onServerStop(FMLServerStoppingEvent e) {
+        LOGGER.info("ServerBase stopping...");
+    }
+
+    @SubscribeEvent
+    public void onServerStopped(FMLServerStoppedEvent e) {
+        LOGGER.info("ServerBase stopped.");
+    }
+
+    @SubscribeEvent
+    public void onServerReloaded(ServerReloadedEvent e) {
+        LOGGER.info("ServerBase reloading...");
+
+        Config.load();
+
+        LOGGER.info("ServerBase reloaded.");
+    }
+
 }
